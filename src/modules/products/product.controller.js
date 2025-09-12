@@ -1,6 +1,6 @@
 const productModel = require('./product.module');
 const categoryModel = require('../products-category/category.model');
-const manufactureModel = require('../manufacture/manufacture.module');
+const manufactureModel = require('../manufacture/manufacture.model');
 class productController{
     async getoneProduct(req, res){
         try{
@@ -21,13 +21,11 @@ class productController{
     }
     async getAllProducts(req, res){
         try{
-            const product_name= req.query.name;
+            const product_name = String(req.query.name || "").trim();
             const products= await productModel.aggregate([{
                 $match:{
                     isactive: true,
-                    $text:{
-                        $search: product_name
-                    }
+                  
                 }
             }]);
             if(products.length === 0){
@@ -43,7 +41,7 @@ class productController{
     async getProductsByCategory(req, res){
         try{
             const category = req.params.category;
-            const product= productModel.aggregate([
+            const product= await productModel.aggregate([
                 {
                     $match : {
                         isactive: true,
@@ -57,12 +55,17 @@ class productController{
                         foreignField: '_id',
                         as: 'categoryDetails'
                     },
-                    
-                    $match: {
-                       ' categoryDetails.isactive': true,
-                        'categoryDetails.name': category    
-                }
             },
+            {
+                $unwind: '$categoryDetails'
+            },
+            {
+                $match: {
+                    "categoryDetails.isactive": true,
+                    "categoryDetails.name": category
+             }
+            },
+              
             {
                 $project: {
                     name: 1,
@@ -80,7 +83,7 @@ class productController{
             }
         }
             ]) ;
-            if(product.length()==0){
+            if(product.length===0){
                 return res.status(404).json({message: "No products found in this category"});
             }
             return res.status(200).json({message: "Products retrieved successfully", product});
@@ -105,6 +108,9 @@ class productController{
                         foreignField: '_id',
                         as: 'manufactureDetails'
                     }
+                },
+                {
+                    $unwind: '$manufactureDetails'
                 },
                 {
                     $match: {

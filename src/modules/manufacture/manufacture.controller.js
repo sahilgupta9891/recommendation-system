@@ -1,4 +1,4 @@
-const manufactureModel = require("./manufacture.module");
+const manufactureModel = require("./manufacture.model");
 
 class manufactureController{
     async getManufactureById(req, res) {

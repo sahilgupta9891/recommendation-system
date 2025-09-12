@@ -1,7 +1,8 @@
 const { ObjectId } = require('bson');
 const mongoose = require('mongoose');
+
 const categoryFields = {
-    // _id: { type: String, required: true, unique: true },
+    
     name: { type: String, required: true, unique: true },
     isactive: { type: Boolean, default: true },
 }

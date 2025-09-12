@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 // const { is } = require('type-is');
 const { object } = require('webidl-conversions');
 const categoryModel = require('../products-category/category.model');
-const manufactureModel = require('../manufacture/manufacture.module');
+const manufactureModel = require('../manufacture/manufacture.model');
 const productField = {
     name: {type: String , required: true},
     code: {type:String, required: true, unique: true},
@@ -20,5 +20,6 @@ const productField = {
 const productSchema= new mongoose.Schema(productField,{
     timestamps: true
 })
+productSchema.index({name:'text'});
 const productModel= mongoose.model('Product', productSchema);
 module.exports = productModel;
