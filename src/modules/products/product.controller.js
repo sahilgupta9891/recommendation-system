@@ -27,7 +27,25 @@ class productController{
                     isactive: true,
                   
                 }
-            }]);
+            },
+            {
+                $lookup:{
+                    from:'manufactures',
+                    localField: 'manufacture',
+                    foreignField: '_id',
+                    as: 'manufactureDetails'
+                }
+            },
+            {
+                $lookup:{
+                    from: 'categories',
+                    localField: 'category', 
+                    foreignField: '_id',
+                    as: 'categoryDetails'
+                }
+            }
+
+        ]);
             if(products.length === 0){
                 return res.status(404).json({message: "No products found"});
             }

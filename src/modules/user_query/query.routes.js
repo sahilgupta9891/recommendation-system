@@ -1,5 +1,5 @@
 const express = require('express');
-const QueryResponseHandler = require('./query.controller');
+const {embeddingsForAllProducts} = require('./query.controller');
 const router = express.Router();
-router.post('/', QueryResponseHandler.queryresponse);
+router.post('/', embeddingsForAllProducts);
 module.exports = router;

@@ -44,12 +44,12 @@ async function fetchFromAPIByCategory(endpoint)
     return { error: `Failed to fetch data from endpoint: ${endpoint}` };
   }
 }
-async function fetchFromAPIByName(endpoint) 
+async function fetchFromAPIforALL() 
 {
-  const baseUrl = process.env.CONTENT_URL_Name; 
+  const baseUrl = process.env.CONTENT_URL_id; 
   try {
-    console.log(`Fetching data from: ${baseUrl}${endpoint}`);
-    const response = await fetch(`${baseUrl}${endpoint}`);
+    console.log(`Fetching data from: ${baseUrl}`);
+    const response = await fetch(`${baseUrl}`);
     if (!response.ok) {
       throw new Error(`API request failed with status ${response.status}`);
     }
@@ -61,4 +61,4 @@ async function fetchFromAPIByName(endpoint)
 }
 
 
-module.exports = { fetchFromAPI, fetchFromAPIByManufacture , fetchFromAPIByCategory, fetchFromAPIByName};
+module.exports = { fetchFromAPI, fetchFromAPIByManufacture , fetchFromAPIByCategory, fetchFromAPIforALL};

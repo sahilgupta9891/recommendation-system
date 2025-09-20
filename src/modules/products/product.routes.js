@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post('/', productController.createProduct);
 router.get('/:id', productController.getoneProduct);
-router.get('/name/:name', productController.getAllProducts);
+router.get('/', productController.getAllProducts);
 router.get('/category/:category', productController.getProductsByCategory);
 router.get('/manufacture/:manufacture', productController.getProductsByManufacture);
 router.put('/:id', productController.updateProduct);
